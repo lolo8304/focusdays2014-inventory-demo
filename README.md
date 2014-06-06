@@ -39,4 +39,5 @@ image2text:
  
 barcode2text
 - barcode app (free): https://play.google.com/store/apps/details?id=com.google.zxing.client.android&hl=de 
+- (unfortuntaly the intent integration to other apps does not support code2text only image2code detection :-(
 - eansearch service: http://raspi-lolo.dyndns.org/upload/  using codecheck.info via HTTP integration
