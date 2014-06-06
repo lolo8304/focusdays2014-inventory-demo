@@ -36,8 +36,23 @@ text2speech:
 - none, android native, speech recognitions installed
 
 image2text: 
- 
+- using camera + gallery view intents native android
+- shrink picture down to 512px max width
+- upload to http://raspi-lolo.dyndns.org/upload
+- using Google image search via WebSite (no API available) and capturing text
+- example http://images.google.com/searchbyimage?image_url=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F0%2F09%2FRheinfall_bei_Schaffhausen_02.JPG 
+
 barcode2text
 - barcode app (free): https://play.google.com/store/apps/details?id=com.google.zxing.client.android&hl=de 
 - (unfortuntaly the intent integration to other apps does not support code2text only image2code detection :-(
-- eansearch service: http://raspi-lolo.dyndns.org/upload/  using codecheck.info via HTTP integration
+- eansearch service: http://raspi-lolo.dyndns.org/upload/  using codecheck.info via WebSite integration (no API available)
+- other public API available (only for 10 calls / day - http://www.ean-search.org/)
+
+google maps / localization API
+- using Google Android Localization APIs: https://developer.android.com/training/location/index.html
+
+android accounts information
+- none, standard android
+
+android profile information
+- none, standard android
