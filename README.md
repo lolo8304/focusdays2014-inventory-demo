@@ -38,7 +38,7 @@ text2speech:
 image2text: 
 - using camera + gallery view intents native android
 - shrink picture down to 512px max width
-- upload to http://raspi-lolo.dyndns.org/upload
+- upload and detect image2text via http://inventory42-focusdays2014.rhcloud.com/
 - using Google image search via WebSite (no API available) and capturing text
 - example http://images.google.com/searchbyimage?image_url=http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F0%2F09%2FRheinfall_bei_Schaffhausen_02.JPG 
 
