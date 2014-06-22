@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" xmlns:o="http://wireframesketcher.com/1.0/model/overrides">
+  <widgets xsi:type="model:Master" id="1" x="200" y="10" measuredWidth="430" measuredHeight="844">
+    <screen xsi:type="model:WidgetGroup" href="assets/Android4/Android4.screen#Phone"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="2" x="238" y="144" measuredWidth="360" measuredHeight="50">
+    <screen xsi:type="model:WidgetGroup" href="assets/Android44/Navigation.screen#Action%20Bar%20Drawer"/>
+    <overrides>
+      <widgetChanges xsi:type="o:Delete" ref="43"/>
+      <widgetChanges xsi:type="o:Delete" ref="37"/>
+      <widgets ref="42" text="New inventory - Settings"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Button" id="8" x="480" y="624" width="109" height="81" text="Done" measuredWidth="109" measuredHeight="81" state="focused" link="Room-Home.screen">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="11" x="400" y="641" measuredWidth="48" measuredHeight="48" icon="assets/ai-location-found (xlarge)"/>
+  <widgets xsi:type="model:Button" id="12" x="264" y="624" width="109" height="81" text="Prev" measuredWidth="109" measuredHeight="81" link="Inventory-NewWhere.screen" style="pointleft">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="24" x="471" y="381" measuredWidth="120" measuredHeight="28" link="Inventory-NewWhat.screen">
+    <screen xsi:type="model:WidgetGroup" href="assets/Android44/Controls.screen#Switch"/>
+    <overrides>
+      <widgets ref="1">
+        <attributes key="selected" value="true"/>
+        <font size="20px"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Label" id="25" x="245" y="363" text="Recording a\ncollection?" measuredWidth="119" measuredHeight="64">
+    <font size="20px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="26" x="245" y="200" width="212" text="Language for\nSpeach2Text" measuredWidth="212" measuredHeight="64">
+    <font size="20px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Combo" id="27" x="374" y="214" width="215" text=" english" measuredWidth="215" measuredHeight="36">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="31" x="375" y="262" width="216" height="46" text="Speach2Text settings" measuredWidth="216" measuredHeight="46" link="Speach-Settings-Collection.screen">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="32" x="245" y="320" width="212" text="Currency" measuredWidth="212" measuredHeight="36">
+    <font size="20px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Combo" id="33" x="374" y="321" width="215" text="Swiss Francs" measuredWidth="215" measuredHeight="36">
+    <font size="20px"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="34" x="245" y="435" width="130" text="Name of\nInventory" measuredWidth="130" measuredHeight="64">
+    <font size="20px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Icon" id="35" x="349" y="443" measuredWidth="48" measuredHeight="48" icon="assets/ai-mic (xlarge)"/>
+  <widgets xsi:type="model:Master" id="36" x="396" y="445" width="193" measuredWidth="193" measuredHeight="43">
+    <screen xsi:type="model:WidgetGroup" href="assets/Android44/Controls.screen#Text%20Field"/>
+    <overrides>
+      <widgets ref="7" width="193" text="myWatches"/>
+    </overrides>
+  </widgets>
+  <hRuler/>
+  <vRuler>
+    <guides position="104"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Label" id="1" width="341" text="25'000.- CHF" layoutParams="anchor-center|anchor-bottom" textAlignment="Center">
+    <font size="32px" bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="2" y="70" width="341" text="21.05.2014" layoutParams="anchor-center|anchor-bottom" textAlignment="Center">
+    <font size="22px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="3" y="98" width="341" text="&lt; 12 elements>" layoutParams="anchor-center|anchor-bottom" textAlignment="Center">
+    <font size="22px" bold="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="4" y="42" width="341" text="/ 120'300.- CHF" layoutParams="anchor-center|anchor-bottom" textAlignment="Center">
+    <font size="24px" bold="true"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

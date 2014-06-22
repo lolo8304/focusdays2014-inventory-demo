@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Master" id="60" x="60" y="168" measuredWidth="844" measuredHeight="430">
+    <screen xsi:type="model:WidgetGroup" href="assets/Android44/Devices.screen#Phone%20Landscape"/>
+    <overrides>
+      <widgets ref="5" width="844" height="430"/>
+      <widgets ref="6" width="690" height="384"/>
+      <widgets ref="57" x="69" width="634"/>
+      <widgets ref="58" width="634" height="26"/>
+      <widgets ref="59" x="588"/>
+      <widgets ref="60" x="568"/>
+      <widgets ref="61" x="549"/>
+      <widgets ref="62" x="529"/>
+      <widgets ref="75" x="706" width="44"/>
+      <widgets ref="76" width="44" height="381"/>
+      <widgets ref="77" x="4" y="66" width="32"/>
+      <widgets ref="79" x="4" y="172" width="32"/>
+      <widgets ref="81" x="4" y="277" width="32" link="Room-ObjectEdit.screen"/>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Image" id="61" x="128" y="216" width="636" height="357" measuredWidth="636" measuredHeight="357" src="assets/barcode-scanner-page.png"/>
+  <widgets xsi:type="model:Panel" id="62" x="364" y="328" width="336" height="64" measuredWidth="336" measuredHeight="64" alpha="0" link="Room-ObjectEdit.screen"/>
+  <hRuler/>
+  <vRuler>
+    <guides position="104"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>
