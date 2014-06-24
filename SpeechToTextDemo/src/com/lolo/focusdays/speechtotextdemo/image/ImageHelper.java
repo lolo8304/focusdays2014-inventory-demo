@@ -97,7 +97,7 @@ public class ImageHelper {
 
 	private String uploadAndAnalyze(String fullFileName) throws IOException {
 			return new Upload().multipartRequest(
-					"http://inventory42-focusdays2014.rhcloud.com/UploadAndDetectServlet", 
+					"http://inventory42-focusdays14.rhcloud.com/UploadAndDetectServlet", 
 					"submit=1", 
 					fullFileName, 
 					"file", 

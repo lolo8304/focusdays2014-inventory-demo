@@ -9,7 +9,7 @@ import org.jsoup.Connection.Response;
 import android.util.Log;
 
 public class EANSerchHelper {
-	final static String EAN_SEARCH_URL = "http://jbossews-focusdays2014.rhcloud.com/EANSearch?q=";
+	final static String EAN_SEARCH_URL = "http://inventory42-focusdays14.rhcloud.com/EANSearch?q=";
 
 	private String barcode;
 
