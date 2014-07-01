@@ -33,20 +33,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.inventoryappbase.core.AsyncResponse;
+import com.example.inventoryappbase.core.ean.EANPresentationModel;
+import com.example.inventoryappbase.core.ean.EANSearchAnalyzeAsyncTask;
+import com.example.inventoryappbase.core.ean.IntentIntegrator;
+import com.example.inventoryappbase.core.ean.IntentResult;
+import com.example.inventoryappbase.core.image.Image2TextAsyncTask;
+import com.example.inventoryappbase.core.image.Image2TextPresentationModel;
+import com.example.inventoryappbase.core.location.SimpleAddress;
+import com.example.inventoryappbase.core.profile.ListProfileAsyncTask;
+import com.example.inventoryappbase.core.speech.Speech2TextOnClickListener;
+import com.example.inventoryappbase.core.speech.Text2SpeechListener;
+import com.example.inventoryappbase.core.speech.Text2SpeechOnClickListener;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.maps.model.LatLng;
-import com.lolo.focusdays.speechtotextdemo.ean.EANPresentationModel;
-import com.lolo.focusdays.speechtotextdemo.ean.EANSearchAnalyzeAsyncTask;
-import com.lolo.focusdays.speechtotextdemo.ean.IntentIntegrator;
-import com.lolo.focusdays.speechtotextdemo.ean.IntentResult;
-import com.lolo.focusdays.speechtotextdemo.image.Image2TextAsyncTask;
-import com.lolo.focusdays.speechtotextdemo.image.Image2TextPresentationModel;
 import com.lolo.focusdays.speechtotextdemo.location.MyLocationDemoActivity;
-import com.lolo.focusdays.speechtotextdemo.location.SimpleAddress;
-import com.lolo.focusdays.speechtotextdemo.profile.ListProfileAsyncTask;
-import com.lolo.focusdays.speechtotextdemo.speech.Speech2TextOnClickListener;
-import com.lolo.focusdays.speechtotextdemo.speech.Text2SpeechListener;
-import com.lolo.focusdays.speechtotextdemo.speech.Text2SpeechOnClickListener;
 
 /*
  * 
@@ -136,6 +137,7 @@ public class MainActivity extends RoboActivity   {
 	@InjectView(R.id.descriptionField) private EditText descriptionField;
 	@InjectView(R.id.btnListenDescription) private View btnListenDescription;
 	@InjectView(R.id.textKeywords) private TextView textKeywords;
+	@InjectView(R.id.similarKeywords) private TextView similarKeywords;
 	@InjectView(R.id.textBarcode) private TextView textBarcode;
 	@InjectView(R.id.textBarcodeText) private TextView textBarcodeText;
 
@@ -178,17 +180,17 @@ public class MainActivity extends RoboActivity   {
 		
 		btnSpeakDescription.setOnClickListener(new Speech2TextOnClickListener(this, defaultLocale, RESULT_SPEECH_DESCRIPTION));
 
-		Text2SpeechListener text2SpeechListenerDescription = new Text2SpeechListener(this, btnListenDescription, defaultLocale);
+		Text2SpeechListener text2SpeechListenerDescription = new Text2SpeechListener(btnListenDescription, defaultLocale);
 		ttsDescription = new TextToSpeech(this, text2SpeechListenerDescription);
 		text2SpeechListenerDescription.setTTS(ttsDescription);
-		btnListenDescription.setOnClickListener(new Text2SpeechOnClickListener(this, ttsDescription, descriptionField));
+		btnListenDescription.setOnClickListener(new Text2SpeechOnClickListener(ttsDescription, descriptionField));
 
 		btnSpeakPrice.setOnClickListener(new Speech2TextOnClickListener(this, defaultLocale, RESULT_SPEECH_PRICE));
 
-		Text2SpeechListener text2SpeechListenerPrice = new Text2SpeechListener(this, btnListenPrice, defaultLocale);
+		Text2SpeechListener text2SpeechListenerPrice = new Text2SpeechListener(btnListenPrice, defaultLocale);
 		ttsPrice = new TextToSpeech(this, text2SpeechListenerPrice);
 		text2SpeechListenerPrice.setTTS(ttsPrice);
-		btnListenPrice.setOnClickListener(new Text2SpeechOnClickListener(this, ttsPrice, priceField));
+		btnListenPrice.setOnClickListener(new Text2SpeechOnClickListener(ttsPrice, priceField));
 
 		displayAccounts();
 		
@@ -203,6 +205,7 @@ public class MainActivity extends RoboActivity   {
 			if (this.image2TextModel != null && this.image2TextModel.hasValidImage()) {
 				this.image.setImageURI(this.image2TextModel.getImageSmallUri());
 				textKeywords.setText(this.image2TextModel.getKeywords());
+				similarKeywords.setText(this.image2TextModel.getSimilarKeywords());
 			}
 
 			this.eanModel = savedInstanceState.getParcelable("eanModel");
@@ -386,7 +389,10 @@ public class MainActivity extends RoboActivity   {
 
 	public void onClick_CurrentLocation(View view) {
 		startActivityForResult(
-				new SimpleAddress(this, MyLocationDemoActivity.class), CURRENT_LOCATION);
+				new SimpleAddress(
+						this, 
+						MyLocationDemoActivity.class, 
+						this.getCurrentLocation()), CURRENT_LOCATION);
 	}
 	
 	
@@ -492,7 +498,7 @@ public class MainActivity extends RoboActivity   {
 				this.eanModel.setFormat(scanResult.getFormatName());
 				textBarcode.setText(eanModel.getFormatAndCode());
 				
-				new EANSearchAnalyzeAsyncTask(new AsyncResponse<String>() {
+				new EANSearchAnalyzeAsyncTask(new AsyncResponse<String, Integer>() {
 					@Override
 					public void processTime(long timeInMs) {
 					}
@@ -502,19 +508,32 @@ public class MainActivity extends RoboActivity   {
 						eanModel.setTitle(title);
 						textBarcodeText.setText(eanModel.getTitle());
 					}
+
+					@Override
+					public void processProgress(Integer level) {
+						
+					}
 				}).execute(scanResult.getContents());
 		}
 	}
 
 	private void image2Text(Image2TextPresentationModel model, boolean deleteIfProcessed) {
-		AsyncResponse<Image2TextPresentationModel> response = new AsyncResponse<Image2TextPresentationModel>() {
+		AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel> response = new AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel>() {
 			@Override
 			public void processFinish(Image2TextPresentationModel model) {
 				image.setImageURI(model.getImageSmallUri());
 				textKeywords.setText(model.getKeywords());
+				similarKeywords.setText(model.getSimilarKeywords());
+				
 			}
 			@Override
 			public void processTime(long timeInMs) {
+			}
+			@Override
+			public void processProgress(Image2TextPresentationModel model) {
+				image.setImageURI(model.getImageSmallUri());
+				textKeywords.setText("detecting keywords ...");
+				similarKeywords.setText("");
 			}
 		};
 		new Image2TextAsyncTask(this, response, false).execute(model);

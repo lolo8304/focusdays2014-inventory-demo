@@ -26,6 +26,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.inventoryappbase.core.location.AddressResult;
+import com.example.inventoryappbase.core.location.GetAddressAsyncTask;
+import com.example.inventoryappbase.core.location.SimpleAddress;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;

@@ -2,7 +2,7 @@ package com.lolo.focusdays.speechtotextdemo;
 
 import org.robobinding.presentationmodel.PresentationModel;
 
-import com.lolo.focusdays.speechtotextdemo.ean.EANPresentationModel;
+import com.example.inventoryappbase.core.ean.EANPresentationModel;
 
 @PresentationModel
 public class Speech2TextPresentationModel {
