@@ -4,10 +4,10 @@ import android.os.AsyncTask;
 
 import com.lolo.focusdays.speechtotextdemo.AsyncResponse;
 
-public class EANSearchAnalyzeAsyncTask extends AsyncTask<String, Void, String> {
+public class EANSearchAnalyzeAsyncTask extends AsyncTask<String, Integer, String> {
 	
-	private AsyncResponse<String> response;
-	public EANSearchAnalyzeAsyncTask(AsyncResponse<String> response) {
+	private AsyncResponse<String, Integer> response;
+	public EANSearchAnalyzeAsyncTask(AsyncResponse<String, Integer> response) {
 		this.response = response;
 	}
 	@Override
@@ -18,4 +18,6 @@ public class EANSearchAnalyzeAsyncTask extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 		response.processFinish(result);
 	}
+	
+	
 }

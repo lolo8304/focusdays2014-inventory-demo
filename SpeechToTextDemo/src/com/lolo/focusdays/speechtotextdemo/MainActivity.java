@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONObject;
 import org.robobinding.binder.Binders;
 
 import roboguice.activity.RoboActivity;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -136,6 +138,7 @@ public class MainActivity extends RoboActivity   {
 	@InjectView(R.id.descriptionField) private EditText descriptionField;
 	@InjectView(R.id.btnListenDescription) private View btnListenDescription;
 	@InjectView(R.id.textKeywords) private TextView textKeywords;
+	@InjectView(R.id.similarKeywords) private TextView similarKeywords;
 	@InjectView(R.id.textBarcode) private TextView textBarcode;
 	@InjectView(R.id.textBarcodeText) private TextView textBarcodeText;
 
@@ -203,6 +206,7 @@ public class MainActivity extends RoboActivity   {
 			if (this.image2TextModel != null && this.image2TextModel.hasValidImage()) {
 				this.image.setImageURI(this.image2TextModel.getImageSmallUri());
 				textKeywords.setText(this.image2TextModel.getKeywords());
+				similarKeywords.setText(this.image2TextModel.getSimilarKeywords());
 			}
 
 			this.eanModel = savedInstanceState.getParcelable("eanModel");
@@ -492,7 +496,7 @@ public class MainActivity extends RoboActivity   {
 				this.eanModel.setFormat(scanResult.getFormatName());
 				textBarcode.setText(eanModel.getFormatAndCode());
 				
-				new EANSearchAnalyzeAsyncTask(new AsyncResponse<String>() {
+				new EANSearchAnalyzeAsyncTask(new AsyncResponse<String, Integer>() {
 					@Override
 					public void processTime(long timeInMs) {
 					}
@@ -502,19 +506,32 @@ public class MainActivity extends RoboActivity   {
 						eanModel.setTitle(title);
 						textBarcodeText.setText(eanModel.getTitle());
 					}
+
+					@Override
+					public void processProgress(Integer level) {
+						
+					}
 				}).execute(scanResult.getContents());
 		}
 	}
 
 	private void image2Text(Image2TextPresentationModel model, boolean deleteIfProcessed) {
-		AsyncResponse<Image2TextPresentationModel> response = new AsyncResponse<Image2TextPresentationModel>() {
+		AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel> response = new AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel>() {
 			@Override
 			public void processFinish(Image2TextPresentationModel model) {
 				image.setImageURI(model.getImageSmallUri());
 				textKeywords.setText(model.getKeywords());
+				similarKeywords.setText(model.getSimilarKeywords());
+				
 			}
 			@Override
 			public void processTime(long timeInMs) {
+			}
+			@Override
+			public void processProgress(Image2TextPresentationModel model) {
+				image.setImageURI(model.getImageSmallUri());
+				textKeywords.setText("detecting keywords ...");
+				similarKeywords.setText("");
 			}
 		};
 		new Image2TextAsyncTask(this, response, false).execute(model);

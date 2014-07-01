@@ -149,7 +149,14 @@ xmlns:bind="http://robobinding.org/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/capturedImage" />
-            </LinearLayout>
+                
+                <TextView
+                    android:id="@+id/similarKeywords"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                
+                </LinearLayout>
         </TableRow>
 
         <TableRow

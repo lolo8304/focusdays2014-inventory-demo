@@ -1,25 +1,31 @@
 package com.lolo.focusdays.speechtotextdemo.image;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.lolo.focusdays.speechtotextdemo.AsyncResponse;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-public class Image2TextAsyncTask extends AsyncTask<Image2TextPresentationModel, Void, Image2TextPresentationModel[]> {
+import com.lolo.focusdays.speechtotextdemo.AsyncResponse;
+import com.lolo.focusdays.speechtotextdemo.JsonHelper;
+
+public class Image2TextAsyncTask extends AsyncTask<Image2TextPresentationModel, Image2TextPresentationModel, Image2TextPresentationModel[]> {
 	
 	private boolean deleteAfterDetection;
-	private Context context;
-	private AsyncResponse<Image2TextPresentationModel> response;
+	private AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel> response;
 
-	public Image2TextAsyncTask(Context context, AsyncResponse<Image2TextPresentationModel> response, boolean deleteAfterDetection) {
+	public Image2TextAsyncTask(Context context, AsyncResponse<Image2TextPresentationModel, Image2TextPresentationModel> response, boolean deleteAfterDetection) {
 		super();
-		this.context = context;
 		this.response = response;
 		this.deleteAfterDetection = deleteAfterDetection;
 	}
+
 
 	@Override
 	protected Image2TextPresentationModel[] doInBackground(Image2TextPresentationModel... models) {
@@ -27,7 +33,18 @@ public class Image2TextAsyncTask extends AsyncTask<Image2TextPresentationModel, 
 			try {
 				ImageHelper image = model.createImage();
 				ImageHelper smallImage = model.createSmallImage(image);
-				model.setKeywords(smallImage.detectKeywords());
+				this.publishProgress(model);
+				JsonHelper json = new JsonHelper();
+				JSONObject image2TextResponse = json.getJSON(smallImage.detectKeywords());
+				model.setKeywords((String)json.evalExpression(image2TextResponse, "keywords"));
+				
+				JSONArray similarImages = json.evalArrayExpression(image2TextResponse, "similarImages");
+				StringBuffer buffer = new StringBuffer();
+				for (int i = 0; i < similarImages.length(); i++) {
+					buffer.append(json.evalExpression(similarImages.getJSONObject(i), "pt"));
+					buffer.append("\n");
+				}
+				model.setSimilarKeywords(buffer.toString());
 //				Toast.makeText(this.context, "tagged picture <" + model.getKeywords() +"> ("+model.getImageSmallUri()+")", Toast.LENGTH_SHORT).show();
 				if (this.deleteAfterDetection) {
 					new File(model.getImageSmallFullName()).delete();
@@ -46,9 +63,13 @@ public class Image2TextAsyncTask extends AsyncTask<Image2TextPresentationModel, 
 	@Override
 	protected void onPostExecute(Image2TextPresentationModel[] models) {
 		for (Image2TextPresentationModel model : models) {
-			Toast.makeText(this.context, "tagged picture <" + model.getKeywords() +"> ("+model.getImageSmallUri()+")", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this.context, "tagged picture <" + model.getKeywords() +"> ("+model.getImageSmallUri()+")", Toast.LENGTH_SHORT).show();
 			response.processFinish(model);
 		}
 	}
-	
+
+	@Override
+	protected void onProgressUpdate(Image2TextPresentationModel... values) {
+		this.response.processProgress(values[0]);
+	}
 }

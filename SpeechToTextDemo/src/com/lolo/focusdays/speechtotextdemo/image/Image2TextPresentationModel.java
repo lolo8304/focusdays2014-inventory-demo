@@ -16,6 +16,8 @@ public class Image2TextPresentationModel implements Parcelable {
 	private String imageSmallFullName;
 	private String imageMediumFullName;
 	private String imageName;
+	private String keywords;
+	private String similarKeywords;
 	private String fileDir;
 	
 	public String getFileDir() {
@@ -25,7 +27,6 @@ public class Image2TextPresentationModel implements Parcelable {
 	public void setFileDir(String fileDir) {
 		this.fileDir = fileDir;
 	}
-	private String keywords;
 
 	public Image2TextPresentationModel() {
 		super();
@@ -40,6 +41,8 @@ public class Image2TextPresentationModel implements Parcelable {
 		this.imageSmallFullName = in.readString();
 		this.imageMediumFullName = in.readString();
 		this.imageName = in.readString();
+		this.keywords = in.readString();
+		this.similarKeywords = in.readString();
 		this.fileDir = in.readString();
 	}
 	
@@ -53,6 +56,8 @@ public class Image2TextPresentationModel implements Parcelable {
 		dest.writeString(this.imageSmallFullName);
 		dest.writeString(this.imageMediumFullName);
 		dest.writeString(this.imageName);
+		dest.writeString(this.keywords);
+		dest.writeString(this.similarKeywords);
 		dest.writeString(this.fileDir);
 		
 	}
@@ -155,6 +160,14 @@ public class Image2TextPresentationModel implements Parcelable {
 	}
 	public void setImageOriginalFullName(String imageOriginalFullName) {
 		this.imageOriginalFullName = imageOriginalFullName;
+	}
+
+	public String getSimilarKeywords() {
+		return similarKeywords;
+	}
+
+	public void setSimilarKeywords(String similarKeywords) {
+		this.similarKeywords = similarKeywords;
 	}
 
 	
