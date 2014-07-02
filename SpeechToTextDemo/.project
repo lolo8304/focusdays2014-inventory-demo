@@ -3,6 +3,7 @@
 	<name>SpeechToTextDemo</name>
 	<comment></comment>
 	<projects>
+		<project>inventoryAppBase</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
