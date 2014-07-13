@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-import org.json.JSONObject;
 import org.robobinding.binder.Binders;
 
 import roboguice.activity.RoboActivity;
@@ -27,7 +26,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -307,7 +305,7 @@ public class MainActivity extends RoboActivity   {
 
 	private void displayAccounts() {
 		AccountManager accountManager = AccountManager.get(this);
-		Account[] accounts = accountManager.getAccounts();
+		Account[] accounts = accountManager.getAccountsByType("com.google");
 		StringBuffer buffer = new StringBuffer();
 
 		
